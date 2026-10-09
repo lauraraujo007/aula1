@@ -1,0 +1,13 @@
+body {
+    display: flex;
+    flex-direction: row; 
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.grafico {
+    position: relative;
+    width: 80vh;
+    height: 80vh;
+}
