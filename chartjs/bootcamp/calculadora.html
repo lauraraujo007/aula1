@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Científica Avançada</title>
+    <link rel="stylesheet" href="calculadora.css">
+</head>
+<body>
+    <div class="calculator-container">
+        <div class="calculator-header">
+            <h1>Calculadora Científica</h1>
+            <div class="mode-indicator">
+                <span id="angleMode">RAD</span>
+                <button id="toggleAngleMode" class="mode-btn" title="Alternar Radiano/Grau">RAD/DEG</button>
+            </div>
+        </div>
+        
+        <div class="display-container">
+            <div class="history-panel" id="historyPanel">
+                <div class="history-header">
+                    <span>Histórico</span>
+                    <button id="clearHistory" class="icon-btn" title="Limpar histórico">🗑️</button>
+                </div>
+                <div class="history-list" id="historyList"></div>
+            </div>
+            <div class="main-display">
+                <div class="expression-display" id="expressionDisplay"></div>
+                <div class="result-display" id="resultDisplay">0</div>
+            </div>
+        </div>
+
+        <div class="memory-indicator" id="memoryIndicator" style="display: none;">M</div>
+
+        <div class="button-grid">
+            <div class="button-row scientific-row">
+                <button class="btn func-btn" data-func="sin" title="Seno">sin</button>
+                <button class="btn func-btn" data-func="cos" title="Cosseno">cos</button>
+                <button class="btn func-btn" data-func="tan" title="Tangente">tan</button>
+                <button class="btn func-btn" data-func="asin" title="Arco Seno">asin</button>
+                <button class="btn func-btn" data-func="acos" title="Arco Cosseno">acos</button>
+                <button class="btn func-btn" data-func="atan" title="Arco Tangente">atan</button>
+            </div>
+            <div class="button-row scientific-row">
+                <button class="btn func-btn" data-func="sinh" title="Seno Hiperbólico">sinh</button>
+                <button class="btn func-btn" data-func="cosh" title="Cosseno Hiperbólico">cosh</button>
+                <button class="btn func-btn" data-func="tanh" title="Tangente Hiperbólica">tanh</button>
+                <button class="btn func-btn" data-func="asinh" title="Arco Seno Hiperbólico">asinh</button>
+                <button class="btn func-btn" data-func="acosh" title="Arco Cosseno Hiperbólico">acosh</button>
+                <button class="btn func-btn" data-func="atanh" title="Arco Tangente Hiperbólica">atanh</button>
+            </div>
+            <div class="button-row scientific-row">
+                <button class="btn func-btn" data-func="log" title="Logaritmo Natural (ln)">ln</button>
+                <button class="btn func-btn" data-func="log10" title="Logaritmo Base 10">log</button>
+                <button class="btn func-btn" data-func="log2" title="Logaritmo Base 2">log₂</button>
+                <button class="btn func-btn" data-func="exp" title="Exponencial (eˣ)">eˣ</button>
+                <button class="btn func-btn" data-func="pow" title="Potência (xʸ)">xʸ</button>
+                <button class="btn func-btn" data-func="sqrt" title="Raiz Quadrada">√</button>
+            </div>
+            <div class="button-row scientific-row">
+                <button class="btn func-btn" data-func="cbrt" title="Raiz Cúbica">∛</button>
+                <button class="btn func-btn" data-func="factorial" title="Fatorial (x!)">x!</button>
+                <button class="btn func-btn" data-func="perm" title="Permutação (nPr)">nPr</button>
+                <button class="btn func-btn" data-func="comb" title="Combinação (nCr)">nCr</button>
+                <button class="btn func-btn" data-func="abs" title="Valor Absoluto">|x|</button>
+                <button class="btn func-btn" data-func="mod" title="Módulo">mod</button>
+            </div>
+            <div class="button-row constants-row">
+                <button class="btn const-btn" data-const="pi" title="Pi (π)">π</button>
+                <button class="btn const-btn" data-const="e" title="Número de Euler (e)">e</button>
+                <button class="btn const-btn" data-const="phi" title="Proporção Áurea (φ)">φ</button>
+                <button class="btn const-btn" data-const="tau" title="Tau (2π)">τ</button>
+                <button class="btn const-btn" data-const="sqrt2" title="Raiz de 2">√2</button>
+                <button class="btn const-btn" data-const="ln2" title="Logaritmo Natural de 2">ln2</button>
+            </div>
+            <div class="button-row memory-row">
+                <button class="btn mem-btn" id="memClear" title="Limpar Memória (MC)">MC</button>
+                <button class="btn mem-btn" id="memRecall" title="Recuperar Memória (MR)">MR</button>
+                <button class="btn mem-btn" id="memAdd" title="Adicionar à Memória (M+)">M+</button>
+                <button class="btn mem-btn" id="memSubtract" title="Subtrair da Memória (M-)">M-</button>
+                <button class="btn mem-btn" id="memStore" title="Armazenar na Memória (MS)">MS</button>
+                <button class="btn func-btn" data-func="round" title="Arredondar">round</button>
+            </div>
+            <div class="button-row main-row">
+                <button class="btn op-btn" data-op="clear" title="Limpar Tudo (C)">C</button>
+                <button class="btn op-btn" data-op="backspace" title="Apagar (⌫)">⌫</button>
+                <button class="btn op-btn" data-op="parenthesis" data-value="(" title="Parênteses Aberto">(</button>
+                <button class="btn op-btn" data-op="parenthesis" data-value=")" title="Parênteses Fechado">)</button>
+                <button class="btn op-btn" data-op="percent" title="Porcentagem">%</button>
+                <button class="btn op-btn" data-op="divide" title="Divisão">÷</button>
+            </div>
+            <div class="button-row main-row">
+                <button class="btn num-btn" data-num="7">7</button>
+                <button class="btn num-btn" data-num="8">8</button>
+                <button class="btn num-btn" data-num="9">9</button>
+                <button class="btn op-btn" data-op="multiply" title="Multiplicação">×</button>
+                <button class="btn func-btn" data-func="pow10" title="10ˣ">10ˣ</button>
+                <button class="btn func-btn" data-func="log1p" title="ln(1+x)">ln(1+x)</button>
+            </div>
+            <div class="button-row main-row">
+                <button class="btn num-btn" data-num="4">4</button>
+                <button class="btn num-btn" data-num="5">5</button>
+                <button class="btn num-btn" data-num="6">6</button>
+                <button class="btn op-btn" data-op="subtract" title="Subtração">−</button>
+                <button class="btn func-btn" data-func="expm1" title="eˣ - 1">eˣ-1</button>
+                <button class="btn func-btn" data-func="sign" title="Sinal">±</button>
+            </div>
+            <div class="button-row main-row">
+                <button class="btn num-btn" data-num="1">1</button>
+                <button class="btn num-btn" data-num="2">2</button>
+                <button class="btn num-btn" data-num="3">3</button>
+                <button class="btn op-btn" data-op="add" title="Adição">+</button>
+                <button class="btn func-btn" data-func="floor" title="Piso (Floor)">floor</button>
+                <button class="btn func-btn" data-func="ceil" title="Teto (Ceil)">ceil</button>
+            </div>
+            <div class="button-row main-row">
+                <button class="btn num-btn" data-num="0" style="grid-column: span 2;">0</button>
+                <button class="btn num-btn" data-num=".">.</button>
+                <button class="btn op-btn" data-op="equals" title="Igual (=)">=</button>
+                <button class="btn func-btn" data-func="trunc" title="Truncar">trunc</button>
+                <button class="btn func-btn" data-func="random" title="Número Aleatório">rand</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="calculadora.js"></script>
+</body>
+</html>
